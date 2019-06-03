@@ -1,0 +1,30 @@
+myInput = open('input.txt', 'r', encoding='utf8')
+myOutput = open('output.txt', 'w', encoding='utf8')
+n = int(myInput.readline())
+ablist = []
+for line in myInput:
+    newline = line.split()
+    if int(newline[-1]) >= 40 and int(newline[-2]) >= 40 \
+            and int(newline[-3]) >= 40:
+        ablist.append(newline)
+myInput.close()
+ablist.sort(key=lambda x: int(x[-1]) + int(x[-2]) + int(x[-3]))
+ablist.reverse()
+comp = []
+for i in ablist:
+    sum = int(i[-1]) + int(i[-2]) + int(i[-3])
+    comp.append(sum)
+l = len(comp)
+
+
+def competition(l, n, comp):
+    if l <= n:
+        return 0
+    elif comp[n] == comp[0]:
+        return 1
+    for i in range(n, 0, -1):
+        if comp[i] < comp[i - 1]:
+            return comp[i - 1]
+
+
+print(competition(l, n, comp), file=myOutput)
